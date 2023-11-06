@@ -100,6 +100,19 @@ export const inputComponents = [
   {
     // 组件的自定义配置
     __config__: {
+      label: '文本',
+      labelWidth: null,
+      tag: 'p',
+      tagIcon: 'input',
+      defaultValue: undefined,
+      layout: 'colFormItem',
+      span: 24
+    },
+    readonly: false
+  },
+  {
+    // 组件的自定义配置
+    __config__: {
       label: '单行文本',
       labelWidth: null,
       showLabel: true,
@@ -656,7 +669,25 @@ export const layoutComponents = [
   {
     __config__: {
       layout: 'colFormItem',
+      label: '分页',
+      showLabel: true,
+      changeTag: true,
+      labelWidth: null,
+      tag: 'el-pagination',
+      tagIcon: 'button',
+      span: 24,
+      document: 'https://element.eleme.cn/#/zh-CN/component/pagination'
+    },
+    __slot__: {
+      default: '主要按钮'
+    }
+    // layout: 'prev, pager, next',
+    // pageSize: 20
+  },
+  {
+    __config__: {
       tagIcon: 'table',
+      layout: 'colFormItem',
       tag: 'el-table',
       document: 'https://element.eleme.cn/#/zh-CN/component/table',
       span: 24,

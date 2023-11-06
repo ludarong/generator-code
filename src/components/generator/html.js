@@ -285,6 +285,24 @@ const tags = {
     if (child) child = `\n${child}\n` // 换行
     return `<${tag} ${ref} ${fileList} ${action} ${autoUpload} ${multiple} ${beforeUpload} ${listType} ${accept} ${name} ${disabled}>${child}</${tag}>`
   },
+  'el-pagination': el => {
+    const {
+      tag
+    } = attrBuilder(el)
+    const layout = el.layout ? `layout="${el.layout}"` : ''
+    const pageSize = el.pageSize ? `:page-size="${el.pageSize}"` : ''
+
+    return `<${tag} ${layout} ${pageSize}></${tag}>`
+  },
+  'el-table': el => {
+    const {
+      tag
+    } = attrBuilder(el)
+    const tableData = el.tableData ? `:data="${el.tableData}"` : ''
+    const fit = el.fit ? `fit="${el.fit}"` : ''
+
+    return `<${tag} ${tableData} ${fit}></${tag}>`
+  },
   tinymce: el => {
     const { tag, vModel, placeholder } = attrBuilder(el)
     const height = el.height ? `:height="${el.height}"` : ''

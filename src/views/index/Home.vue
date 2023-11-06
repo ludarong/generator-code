@@ -195,18 +195,18 @@ export default {
           title: '自定义组件',
           list: customComponents
         },
-        // {
-        //   title: '输入型组件',
-        //   list: inputComponents
-        // },
+        {
+          title: '输入型组件',
+          list: inputComponents
+        },
         {
           title: '基础组件',
           list: selectComponents
+        },
+        {
+          title: '布局型组件',
+          list: layoutComponents
         }
-        // {
-        //   title: '布局型组件',
-        //   list: layoutComponents
-        // }
       ]
     }
   },

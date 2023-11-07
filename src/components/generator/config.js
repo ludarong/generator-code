@@ -1,3 +1,4 @@
+// todo：后期区分表单属性&正常页面属性
 // 表单属性【右面板】
 export const formConf = {
   formRef: 'elForm',
@@ -670,7 +671,7 @@ export const layoutComponents = [
     __config__: {
       layout: 'colFormItem',
       label: '分页',
-      showLabel: true,
+      showLabel: false,
       changeTag: true,
       labelWidth: null,
       tag: 'el-pagination',
@@ -680,9 +681,10 @@ export const layoutComponents = [
     },
     __slot__: {
       default: '主要按钮'
-    }
-    // layout: 'prev, pager, next',
-    // pageSize: 20
+    },
+    layout: 'total, prev, pager, next',
+    pageSize: 20,
+    total: 1000
   },
   {
     __config__: {
@@ -691,10 +693,10 @@ export const layoutComponents = [
       tag: 'el-table',
       document: 'https://element.eleme.cn/#/zh-CN/component/table',
       span: 24,
-      formId: 101,
-      renderKey: 1595761764203,
+      formId: 173,
+      renderKey: '1731699263709752',
       componentName: 'row101',
-      showLabel: true,
+      showLabel: false,
       changeTag: true,
       labelWidth: null,
       label: '表格',
@@ -707,7 +709,8 @@ export const layoutComponents = [
         __config__: {
           layout: 'raw',
           tag: 'el-table-column',
-          renderKey: 15957617660153
+          renderKey: '1741699263709752',
+          formId: 174
         },
         prop: 'date',
         label: '日期'
@@ -715,7 +718,8 @@ export const layoutComponents = [
         __config__: {
           layout: 'raw',
           tag: 'el-table-column',
-          renderKey: 15957617660152
+          renderKey: '1751699263709752',
+          formId: 175
         },
         prop: 'address',
         label: '地址'
@@ -723,7 +727,8 @@ export const layoutComponents = [
         __config__: {
           layout: 'raw',
           tag: 'el-table-column',
-          renderKey: 15957617660151
+          renderKey: '1761699263709752',
+          formId: 176
         },
         prop: 'name',
         label: '名称'
@@ -731,37 +736,79 @@ export const layoutComponents = [
         __config__: {
           layout: 'raw',
           tag: 'el-table-column',
-          renderKey: 1595774496335,
-          children: [
-            {
-              __config__: {
-                label: '按钮',
-                tag: 'el-button',
-                tagIcon: 'button',
-                layout: 'raw',
-                renderKey: 1595779809901
-              },
-              __slot__: {
-                default: '主要按钮'
-              },
-              type: 'primary',
-              icon: 'el-icon-search',
-              round: false,
-              size: 'medium'
-            }
-          ]
+          renderKey: '1771699263709752',
+          children: [{
+            __config__: {
+              label: '按钮',
+              tag: 'el-button',
+              tagIcon: 'button',
+              layout: 'raw',
+              renderKey: '1781699263709752',
+              formId: 178
+            },
+            __slot__: {
+              default: '主要按钮'
+            },
+            type: 'primary',
+            icon: 'el-icon-search',
+            round: false,
+            size: 'medium'
+          }],
+          formId: 177
         },
         label: '操作'
       }]
     },
-    data: [],
+    data: [{
+      orderId: '20231101104419EU9389366808000021004',
+      status: '审批成功',
+      time: '2023-11-01 05:07:05'
+    }],
     directives: [{
       name: 'loading',
-      value: true
+      value: false
     }],
     border: true,
     type: 'default',
     justify: 'start',
-    align: 'top'
+    align: 'top',
+    __vModel__: 'field173'
+  },
+  {
+    // 组件的自定义配置
+    __config__: {
+      label: 'MMC表格组件---需替换data list',
+      showLabel: true,
+      labelWidth: null,
+      tag: 'sp-table',
+      componentName: 'sp-table',
+      tagIcon: 'input',
+      layout: 'colFormItem',
+      span: 24
+    },
+    // 其余的为可直接写在组件标签上的属性
+    style: { width: '100%' }
+  }
+]
+
+// 标签型组件
+export const tagComponents = [
+  {
+    // 组件的自定义配置
+    __config__: {
+      label: 'h2标签',
+      showLabel: true,
+      labelWidth: null,
+      tag: 'h2',
+      tagIcon: 'input',
+      layout: 'colFormItem',
+      span: 24,
+      defaultValue: 'test'
+    },
+    // 其余的为可直接写在组件标签上的属性
+    style: { width: '100%' },
+    __slot__: {
+      default: '提现记录'
+    }
   }
 ]

@@ -281,7 +281,7 @@
             <el-input v-model="activeData.__config__.buttonText" placeholder="请输入按钮文字" />
           </el-form-item>
           <el-form-item
-            v-if="activeData.__config__.tag === 'el-button'"
+            v-if="activeData.__config__.tag === 'el-button' || activeData.__config__.tag === 'h2'"
             label="按钮文字"
           >
             <el-input v-model="activeData.__slot__.default" placeholder="请输入按钮文字" />

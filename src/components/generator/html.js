@@ -291,8 +291,9 @@ const tags = {
     } = attrBuilder(el)
     const layout = el.layout ? `layout="${el.layout}"` : ''
     const pageSize = el.pageSize ? `:page-size="${el.pageSize}"` : ''
+    const total = el.total ? `:total="${el.total}"` : ''
 
-    return `<${tag} ${layout} ${pageSize}></${tag}>`
+    return `<${tag} ${layout} ${pageSize} ${total}></${tag}>`
   },
   'el-table': el => {
     const {
@@ -302,6 +303,19 @@ const tags = {
     const fit = el.fit ? `fit="${el.fit}"` : ''
 
     return `<${tag} ${tableData} ${fit}></${tag}>`
+  },
+  h2: el => {
+    const {
+      tag
+    } = attrBuilder(el)
+
+    return `<${tag}>${el.__slot__.default}</${tag}>`
+  },
+  'sp-table': el => {
+    const {
+      tag
+    } = attrBuilder(el)
+    return `<${tag} ref="spTable" v-bind="${el.accountTableData}" default-expand-all row-key="${el.uuid}" max-height="650" />`
   },
   tinymce: el => {
     const { tag, vModel, placeholder } = attrBuilder(el)

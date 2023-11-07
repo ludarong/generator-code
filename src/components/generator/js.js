@@ -240,6 +240,7 @@ function buildOptionMethod(methodName, model, methodList, scheme) {
 
 // js整体拼接
 function buildexport(conf, type, data, rules, selectOptions, uploadVar, props, methods, created) {
+  // todo：自定义组件引入import生成对应代码，后期优化添加
   const str = `${exportDefault}{
   ${inheritAttrs[type]}
   components: {},

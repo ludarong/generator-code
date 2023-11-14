@@ -31,6 +31,9 @@
               </el-option-group>
             </el-select>
           </el-form-item>
+          <el-form-item label="多语言">
+            <el-input v-model="activeData.__vModel__.lang" placeholder="请输入多语言key" />
+          </el-form-item>
           <el-form-item v-if="activeData.__vModel__!==undefined" label="字段名">
             <el-input v-model="activeData.__vModel__" placeholder="请输入字段名（v-model）" />
           </el-form-item>

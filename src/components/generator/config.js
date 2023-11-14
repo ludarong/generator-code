@@ -17,6 +17,18 @@ export const customComponents = [
   {
     // 组件的自定义配置
     __config__: {
+      label: '详情',
+      showLabel: true,
+      labelWidth: null,
+      tag: 'el-input',
+      tagIcon: 'input',
+      layout: 'colFormItem',
+      span: 24
+    }
+  },
+  {
+    // 组件的自定义配置
+    __config__: {
       label: '列表筛选',
       showLabel: true,
       labelWidth: null,

@@ -45,6 +45,16 @@
 
     <div class="center-board">
       <div class="action-bar">
+        <el-select v-model="selectedModel"
+          placeholder="模版选择"
+          @change="onStencilSelectChange">
+          <el-option
+            v-for="item in stencilOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
         <el-button icon="el-icon-video-play" type="text" @click="run">
           运行
         </el-button>
@@ -63,30 +73,36 @@
       </div>
       <el-scrollbar class="center-scrollbar">
         <el-row class="center-board-row" :gutter="formConf.gutter">
-          <el-form
-            :size="formConf.size"
-            :label-position="formConf.labelPosition"
-            :disabled="formConf.disabled"
-            :label-width="formConf.labelWidth + 'px'"
-          >
-            <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup">
-              <draggable-item
-                v-for="(item, index) in drawingList"
-                :key="item.renderKey"
-                :drawing-list="drawingList"
-                :current-item="item"
-                :index="index"
-                :active-id="activeId"
-                :form-conf="formConf"
-                @activeItem="activeFormItem"
-                @copyItem="drawingItemCopy"
-                @deleteItem="drawingItemDelete"
-              />
-            </draggable>
-            <div v-show="!drawingList.length" class="empty-info">
-              从左侧拖入或点选组件进行表单设计
-            </div>
-          </el-form>
+          <img v-if="selectedModel === '0'" class="header-img" src="https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/WgZOZwr2KYkylLX8/img/c12a93bd-176b-4c46-b259-63deb1f103cc.png">
+          <img v-if="selectedModel === '1'" class="header-img" src="https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/WgZOZwr2KYkylLX8/img/f9d64b4b-10b2-40f8-a2b2-f9070125e551.png">
+          <div class="center-content">
+            <img v-if="selectedModel === '0'" src="https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/WgZOZwr2KYkylLX8/img/ccbae151-ae22-4abd-925a-fdba4a413451.png">
+            <img v-if="selectedModel === '1'" src="https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/WgZOZwr2KYkylLX8/img/db9f5d69-a246-409c-b623-d77aa1a39767.png">
+            <el-form
+              :size="formConf.size"
+              :label-position="formConf.labelPosition"
+              :disabled="formConf.disabled"
+              :label-width="formConf.labelWidth + 'px'"
+            >
+              <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup">
+                <draggable-item
+                  v-for="(item, index) in drawingList"
+                  :key="item.renderKey"
+                  :drawing-list="drawingList"
+                  :current-item="item"
+                  :index="index"
+                  :active-id="activeId"
+                  :form-conf="formConf"
+                  @activeItem="activeFormItem"
+                  @copyItem="drawingItemCopy"
+                  @deleteItem="drawingItemDelete"
+                />
+              </draggable>
+              <div v-show="!drawingList.length" class="empty-info">
+                从左侧拖入或点选组件进行表单设计
+              </div>
+            </el-form>
+          </div>
         </el-row>
       </el-scrollbar>
     </div>
@@ -142,6 +158,7 @@ import {
 import { makeUpJs } from '@/components/generator/js'
 import { makeUpCss } from '@/components/generator/css'
 import drawingDefalut from '@/components/generator/drawingDefalut'
+import selectDrawingDefalut from '@/components/generator/selectDrawingDefalut'
 import logo from '@/assets/logo.png'
 import CodeTypeDialog from './CodeTypeDialog'
 import DraggableItem from './DraggableItem'
@@ -191,11 +208,25 @@ export default {
       activeData: drawingDefalut[0],
       saveDrawingListDebounce: debounce(340, saveDrawingList),
       saveIdGlobalDebounce: debounce(340, saveIdGlobal),
+      selectedModel: '0',
+      stencilOptions: [{
+        value: '0',
+        label: 'MMC列表页面模版'
+      }, {
+        value: '1',
+        label: '商户群组列表页面模版'
+      }, {
+        value: '2',
+        label: 'MMC详情模版'
+      }, {
+        value: '3',
+        label: '商户群组详情模版'
+      }],
       leftComponents: [
-        // {
-        //   title: '自定义组件',
-        //   list: customComponents
-        // },
+        {
+          title: '自定义组件',
+          list: customComponents
+        },
         // {
         //   title: '输入型组件',
         //   list: inputComponents
@@ -214,6 +245,9 @@ export default {
         }
       ]
     }
+  },
+  created() {
+    window.localStorage.setItem('modelType', this.selectedModel)
   },
   computed: {
   },
@@ -278,6 +312,28 @@ export default {
     })
   },
   methods: {
+    onStencilSelectChange(value) {
+      window.localStorage.setItem('modelType', value)
+      this.selectedModel = value
+      switch (value) {
+        case '0':
+          this.drawingList = drawingDefalut
+          break
+        case '1':
+          this.drawingList = selectDrawingDefalut
+          break
+        case '2':
+          this.drawingList = selectDrawingDefalut
+          break
+        case '3':
+          this.drawingList = selectDrawingDefalut
+          break
+        default:
+          this.drawingList = selectDrawingDefalut
+          break
+      }
+      this.AssembleFormData()
+    },
     setObjectValueReduce(obj, strKeys, data) {
       const arr = strKeys.split('.')
       arr.reduce((pre, item, i) => {
@@ -478,4 +534,11 @@ export default {
 
 <style lang='scss'>
 @import '@/styles/home';
+.header-img {
+  width: 100%;
+}
+
+.center-content {
+  display: flex;
+}
 </style>

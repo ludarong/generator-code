@@ -14,12 +14,90 @@ export function dialogWrapper(str) {
   </el-dialog>`
 }
 
-export function vueTemplate(str) {
+export function MMCVueTemplate(str) {
   return `<template>
-    <div>
-      ${str}
+    <div class="page-transfer-list">
+      <breadcrumb
+        :show-breadcrumb="true"
+        :show-back="false"
+        :has-margin="false" />
+      <mmc-create :title="$t('transferManager.transfersRecords')">
+        <el-button
+          v-has="'TRANSFER_APPLY'"
+          :loading="createLoading"
+          class="transfer-apply-btn"
+          type="primary">{{ $t("transferManager.actions.create") }}</el-button>
+      </mmc-create>
+      <mmc-normal-table>
+        <div class="d2-form-div form-info">
+          ${str}
+        </div>
+        <sp-table
+          ref="table"
+          v-bind="table"
+          row-class-name="row-class"
+          @update=""
+          @row-click="" />
+      </mmc-normal-table>
     </div>
   </template>`
+}
+
+export function GroupVueTemplate(str) {
+  return `<template>
+    <div class="payment-wrapper">
+      <div class="search-table">
+        <div class="form-container">
+        ${str}
+        </div>
+        <sp-table
+          ref="table"
+          v-bind="table"
+          row-class-name="row-class"
+          @update=""
+          @row-click="" />
+      </div>
+    </div>
+  </template>`
+}
+
+// todo：详情暂时未组件化，每个列表详情通用性较低，所以暂不适合导出模版，后续封装为组件之后再内置到乐高平台
+export function MMCDetailVueTemplate(str) {
+  return `<template>
+    <mmc-card-info :title-name="$t('accountWithdrawals_v2.title.teamTrade')" :styles="styles">
+      ${str}
+    </mmc-card-info>
+  </template>`
+}
+
+export function GroupDetailVueTemplate(str) {
+  return `<template>
+    <full-screen-layout :text="$t('createMerchantGroupManage.createGroupTitle')" :on-back="false">
+      ${str}
+    </full-screen-layout>
+  </template>`
+}
+
+export function vueTemplate(str) {
+  let deStr = ''
+  const modelType = window.localStorage.getItem('modelType')
+  switch (modelType) {
+    case '0':
+      deStr = MMCVueTemplate(str)
+      break
+    case '1':
+      deStr = GroupVueTemplate(str)
+      break
+    case '2':
+      deStr = MMCDetailVueTemplate(str)
+      break
+    case '3':
+      deStr = GroupDetailVueTemplate(str)
+      break
+    default:
+      break
+  }
+  return deStr
 }
 
 export function vueScript(str) {
@@ -29,8 +107,12 @@ export function vueScript(str) {
 }
 
 export function cssStyle(cssStr) {
+  // todo: 商户群组table style
   return `<style>
     ${cssStr}
+    .search-table {
+      margin: 24px 30px 0 30px;
+    }
   </style>`
 }
 

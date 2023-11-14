@@ -179,6 +179,7 @@ function buildOptions(scheme, optionsList) {
   let { options } = scheme
   if (!options) options = scheme.__slot__.options
   if (scheme.__config__.dataType === 'dynamic') { options = [] }
+  // todo: 现在生成的option内容的key为字符串，前端格式化问题需整改
   const str = `${scheme.__vModel__}Options: ${JSON.stringify(options)},`
   optionsList.push(str)
 }
@@ -237,36 +238,91 @@ function buildOptionMethod(methodName, model, methodList, scheme) {
   },`
   methodList.push(str)
 }
+// table: {
+//   loading: false,
+//   data: [],
+//   columns: columns,
+//   showPagination: true,
+//   layout: 'total, sizes, prev, pager, next',
+// },
+function modelDetail() {
+  const modelType = window.localStorage.getItem('modelType') || '0'
+  let str = {
+    importStr: '',
+    components: '',
+    dataStr: ''
+  }
+  switch (modelType) {
+    case '0':
+      str = {
+        importStr: "import breadcrumb from '@/layout/components/breadcrumb'; import MmcCreate from '@/components/mmc-create';import columns from './columns';",
+        components: 'breadcrumb, MmcCreate',
+        dataStr: `table: {
+          loading: false,
+          data: [],
+          columns: columns,
+          showPagination: true,
+          layout: 'total, sizes, prev, pager, next',
+        }`
+      }
+      break
+    case '1':
+      str = {
+        importStr: "import DetailDrawer from '../detail'; import { paymentSearchColumns as columns } from '../columns';",
+        components: 'DetailDrawer',
+        dataStr: `table: {
+          loading: false,
+          data: [],
+          columns: columns,
+          showPagination: true,
+          layout: 'total, sizes, prev, pager, next',
+        }`
+      }
+      break
+    case '2':
+      console.log('2')
+      break
+    case '3':
+      console.log('3')
+      break
+    default:
+      break
+  }
+  return str
+}
 
 // js整体拼接
 function buildexport(conf, type, data, rules, selectOptions, uploadVar, props, methods, created) {
   // todo：自定义组件引入import生成对应代码，后期优化添加
   const str = `${exportDefault}{
-  ${inheritAttrs[type]}
-  components: {},
-  props: [],
-  data () {
-    return {
-      ${conf.formModel}: {
-        ${data}
-      },
-      ${conf.formRules}: {
-        ${rules}
-      },
-      ${uploadVar}
-      ${selectOptions}
-      ${props}
+    ${inheritAttrs[type]}
+    components: {
+      ${modelDetail().components}
+    },
+    props: [],
+    data () {
+      return {
+        ${conf.formModel}: {
+          ${data}
+        },
+        ${conf.formRules}: {
+          ${rules}
+        },
+        ${modelDetail().dataStr},
+        ${uploadVar}
+        ${selectOptions}
+        ${props}
+      }
+    },
+    computed: {},
+    watch: {},
+    created () {
+      ${created}
+    },
+    mounted () {},
+    methods: {
+      ${methods}
     }
-  },
-  computed: {},
-  watch: {},
-  created () {
-    ${created}
-  },
-  mounted () {},
-  methods: {
-    ${methods}
-  }
-}`
-  return str
+  }`
+  return `${modelDetail().importStr}${str}`
 }

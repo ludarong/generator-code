@@ -5,9 +5,6 @@
         <div class="logo">
           <!-- <img :src="logo" alt="logo"> -->
           PayerMax
-          <!-- <a class="github" href="https://github.com/JakHuang/form-generator" target="_blank">
-            <img src="https://github.githubassets.com/pinned-octocat.svg" alt>
-          </a> -->
         </div>
       </div>
       <el-scrollbar class="left-scrollbar">
@@ -227,10 +224,10 @@ export default {
           title: '自定义组件',
           list: customComponents
         },
-        // {
-        //   title: '输入型组件',
-        //   list: inputComponents
-        // },
+        {
+          title: '输入型组件',
+          list: inputComponents
+        },
         {
           title: '基础组件',
           list: selectComponents
